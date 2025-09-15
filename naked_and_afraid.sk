@@ -1,0 +1,128 @@
+# naked_and_afraid.sk
+# Naked and Afraid SMP - Complete Implementation
+# Author: Enzec (enzec.net)
+# Save to plugins/Skript/scripts/naked_and_afraid.sk
+# Version: 1.1
+
+# =====================================================
+# SERVER.PROPERTIES & GAMERULE SETTINGS TO CONFIGURE:
+# =====================================================
+# In server.properties:
+# - hide-online-players=true
+# - pvp=false
+# 
+# Run these commands in console/command blocks:
+# - /gamerule naturalRegeneration false (UHC - optional)
+# - /gamerule announceAdvancements false (no advancements)
+# - /gamerule showDeathMessages false (no death messages)
+# - /gamerule reducedDebugInfo true (no coordinates)
+# - /worldborder set 5000 (set the bounds)
+# =====================================================
+
+# =====================================================
+# DISABLE CHAT SYSTEM
+# =====================================================
+on chat:
+	cancel event
+	send "&cChat is disabled! Use proximity voice chat to communicate." to player
+
+# Disable all chat-related commands
+command /msg <player> <text>:
+	trigger:
+		send "&cPrivate messaging is disabled!" to player
+
+command /tell <player> <text>:
+	trigger:
+		send "&cPrivate messaging is disabled!" to player
+
+command /w <player> <text>:
+	trigger:
+		send "&cPrivate messaging is disabled!" to player
+
+command /me <text>:
+	trigger:
+		send "&cAction messages are disabled!" to player
+
+# =====================================================
+# DISABLE JOIN/LEAVE MESSAGES & TAB LIST
+# =====================================================
+on join:
+	set join message to ""
+
+on quit:
+	set quit message to ""
+# Disables tab. Only partially functions.
+
+every 30 seconds:
+	loop all players:
+		set player list name of loop-player to " "
+
+# =====================================================
+# DISABLE TOTEMS OF UNDYING
+# =====================================================
+on player pickup of totem of undying:
+	cancel event
+
+# =====================================================
+# ARMOR DAMAGE SYSTEM
+# =====================================================
+every 10 ticks:
+	loop all players:
+		if loop-player is dead:
+			stop
+		set {_armor} to false
+		if loop-player's helmet is not air or skeleton_skull or wither_skeleton_skull or dragon_head:
+			set {_armor} to true
+		if loop-player's chestplate is not air or elytra:
+			set {_armor} to true
+		if loop-player's leggings is not air:
+			set {_armor} to true
+		if loop-player's boots is not air:
+			set {_armor} to true
+		if {_armor} is true:
+			damage loop-player by 1
+
+# To do: prevent dispensers from equipping armor
+
+# =====================================================
+# DEATH SYSTEM - HARDCORE BAN + DEATH CANNON
+# =====================================================
+on death:
+	if victim is player:
+		set {_p} to victim
+		set death message to ""
+		# Play death cannon sound to all online players (server-wide)
+		loop all players:
+			# play custom sound if present; fallback to wither spawn explosion-ish sound:
+			play sound "death.cannon" with volume 4 and pitch 0.9 to loop-player # requires resourcepack; fallback below if sound missing
+		loop all players:
+			play sound "entity.wither.spawn" with volume 3 and pitch 0.9 to loop-player
+		send "&4[DEATH CANNON] &c%victim% has been eliminated from the SMP!" to console
+		stop
+
+# IMPORTANT: Remove the hashtags below to enable Hardcore functionality
+#on respawn:
+#	set {_reason} to "&cYou should have been more careful"
+#	kick player due to {_reason}
+#	ban player due to {_reason}
+
+# =====================================================
+# STARTUP MESSAGE
+# =====================================================
+on script load:
+	send "&6[Naked and Afraid] &aScript loaded successfully!" to console
+	send "&7- Remember to set server.properties: hide-online-players=true=true, pvp=false" to console
+	send "&7- Remember to run gamerules: naturalRegeneration false, announceAdvancements false, showDeathMessages false, reducedDebugInfo true" to console
+
+on script unload:
+	send "&6[Naked and Afraid] &cScript unloaded!" to console
+
+# =====================================================
+# WORLD BORDER REMINDER
+# =====================================================
+# Note: Set world border manually with: /worldborder set 10000
+# This creates a 5000 block radius from spawn (10000 total diameter)
+
+# =====================================================
+# END OF SCRIPT
+# =====================================================
