@@ -2,7 +2,7 @@
 # Naked and Afraid SMP - Complete Implementation
 # Author: Enzec (enzec.net)
 # Save to plugins/Skript/scripts/naked_and_afraid.sk
-# Version: 1.2
+# Version: 1.3
 
 # =====================================================
 # SERVER.PROPERTIES & GAMERULE SETTINGS TO CONFIGURE:
@@ -10,6 +10,9 @@
 # In server.properties:
 # - hide-online-players=true
 # - pvp=false
+# - spawn-npcs=false
+# - spawn-protection=0
+# - online-mode=false (fully hide tablist - optional, needs SkinsRestorer plugin)
 # 
 # Run these commands in the console:
 # - /gamerule naturalRegeneration false (UHC - optional)
@@ -45,25 +48,37 @@ command /me <text>:
 		send "&cAction messages are disabled!" to player
 
 # =====================================================
-# DISABLE JOIN/LEAVE MESSAGES & TAB LIST
+# DISABLE JOIN/LEAVE MESSAGES & OBSCURE TAB LIST
 # =====================================================
 on join:
 	set join message to ""
+	wait 1 tick
+	set player's tablist name to "&k00000"
+	loop all players:
+		set loop-player's tablist name to "&k00000"
 
 on quit:
 	set quit message to ""
-# Disables tab. Only partially functions.
-
-every 30 seconds:
 	loop all players:
-		set player list name of loop-player to " "
+		show player's tablist name to loop-player
+
+# The above method does not fully obscure the tablist, as it still shows players' faces.
+# In server.properties, set "online-mode" to "false" and install the latest version of SkinsRestorer in your /plugins folder.
+# IMPORTANT: Set a whitelist if you choose this option. Hackers can easily infiltrate as any OP account and potentially grief the server.
+# IMPORTANT: You should make this decision before the server starts. Players will "lose" their inventory and progress if you switch between online & offline mode.
 
 # =====================================================
 # DISABLE TOTEMS OF UNDYING
 # =====================================================
 on player pickup of totem of undying:
 	cancel event
-
+    
+# =====================================================
+# DISABLE VILLAGERS
+# =====================================================
+on spawn of villagers:
+	cancel event
+    
 # =====================================================
 # ARMOR DAMAGE SYSTEM
 # =====================================================
@@ -142,7 +157,7 @@ on respawn:
 # =====================================================
 on script load:
 	send "&7[&eNaked &fand &6Afraid&7] &aScript loaded successfully!" to console
-	send "&7- Remember to set server.properties: hide-online-players=true=true, pvp=false" to console
+	send "&7- Remember to set server.properties: hide-online-players=true, pvp=false, spawn-npcs=false, spawn-protection=0" to console
 	send "&7- Remember to run gamerules: naturalRegeneration false, announceAdvancements false, showDeathMessages false, reducedDebugInfo true" to console
 
 on script unload:
