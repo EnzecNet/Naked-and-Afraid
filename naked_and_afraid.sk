@@ -11,12 +11,13 @@
 # - hide-online-players=true
 # - pvp=false
 # 
-# Run these commands in console/command blocks:
+# Run these commands in the console:
 # - /gamerule naturalRegeneration false (UHC - optional)
 # - /gamerule announceAdvancements false (no advancements)
 # - /gamerule showDeathMessages false (no death messages)
 # - /gamerule reducedDebugInfo true (no coordinates)
-# - /worldborder set 5000 (set the bounds)
+# - /worldborder set 30000 (set the bounds)
+# - /hardcore-enable (recommended to run this command once you're completely ready)
 # =====================================================
 
 # =====================================================
@@ -82,47 +83,76 @@ every 10 ticks:
 		if {_armor} is true:
 			damage loop-player by 1
 
-# To do: prevent dispensers from equipping armor
-
 # =====================================================
 # DEATH SYSTEM - HARDCORE BAN + DEATH CANNON
 # =====================================================
+# Hardcore functionality is disabled by default.
+# Enable it with "/hardcore-enable"
+# Disable it again with "/hardcore-disable"
+# =====================================================
 on death:
-	if victim is player:
-		set {_p} to victim
+	{hardcore.enabled} is true:
+		if victim is player:
+			set {_p} to victim
+			set death message to ""
+			# Play death cannon sound to all online players (server-wide)
+			loop all players:
+				# play custom sound if present; fallback to wither spawn explosion-ish sound:
+				play sound "death.cannon" with volume 4 and pitch 0.9 to loop-player # requires resourcepack; fallback below if sound missing
+			loop all players:
+				play sound "entity.wither.spawn" with volume 3 and pitch 0.9 to loop-player
+			send "&4[DEATH CANNON] &c%victim% has been eliminated from the SMP!" to console
+			stop
+	else:
 		set death message to ""
-		# Play death cannon sound to all online players (server-wide)
-		loop all players:
-			# play custom sound if present; fallback to wither spawn explosion-ish sound:
-			play sound "death.cannon" with volume 4 and pitch 0.9 to loop-player # requires resourcepack; fallback below if sound missing
-		loop all players:
-			play sound "entity.wither.spawn" with volume 3 and pitch 0.9 to loop-player
-		send "&4[DEATH CANNON] &c%victim% has been eliminated from the SMP!" to console
-		stop
+        
+options:
+    hardcore-enabled: false # Default state (false = disabled, true = enabled)
 
-# IMPORTANT: Remove the hashtags below to enable Hardcore functionality
-#on respawn:
-#	set {_reason} to "&cYou should have been more careful"
-#	kick player due to {_reason}
-#	ban player due to {_reason}
+command /hardcore-enable:
+    trigger:
+        if sender is console:
+            if {hardcore.enabled} is true:
+                send "&cHardcore mechanics are already enabled." to console
+            else:
+                set {hardcore.enabled} to true
+                send "&aHardcore mechanics have been ENABLED." to console
+        else:
+            send "&cOnly the console can run this command."
+
+command /hardcore-disable:
+    trigger:
+        if sender is console:
+            if {hardcore.enabled} is false:
+                send "&cHardcore mechanics are already disabled." to console
+            else:
+                set {hardcore.enabled} to false
+                send "&dHardcore mechanics have been DISABLED." to console
+        else:
+            send "&cOnly the console can run this command."
+
+on respawn:
+	{hardcore.enabled} is true:
+		set {_reason} to "&cYou should have been more careful"
+		kick player due to {_reason}
+		ban player due to {_reason}
 
 # =====================================================
 # STARTUP MESSAGE
 # =====================================================
 on script load:
-	send "&6[Naked and Afraid] &aScript loaded successfully!" to console
+	send "&7[&eNaked &fand &6Afraid&7] &aScript loaded successfully!" to console
 	send "&7- Remember to set server.properties: hide-online-players=true=true, pvp=false" to console
 	send "&7- Remember to run gamerules: naturalRegeneration false, announceAdvancements false, showDeathMessages false, reducedDebugInfo true" to console
 
 on script unload:
-	send "&6[Naked and Afraid] &cScript unloaded!" to console
+	send "&7[&eNaked &fand &6Afraid&7] &cScript unloaded!" to console
 
 # =====================================================
 # WORLD BORDER REMINDER
 # =====================================================
-# Note: Set world border manually with: /worldborder set 10000
-# This creates a 5000 block radius from spawn (10000 total diameter)
-
+# Note: Set world border manually with: /worldborder set 30000
+# This creates a 15000 block radius from spawn (30000 total diameter)
 # =====================================================
 # END OF SCRIPT
 # =====================================================
