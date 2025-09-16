@@ -36,6 +36,8 @@ Created by [Enzec](https://enzec.net)
 
 ## Version History
 
+* 1.2
+    * Added commands to enable/disable Hardcore mechanics
 * 1.1
     * Disabled totems of undying
     * Elytras, skeleton skulls, and other non-armor items can now be worn without damaging the player
@@ -48,3 +50,4 @@ Created by [Enzec](https://enzec.net)
 
 * Fix the tablist visibility issue
 * Disable dispensers from dispensing armor
+* Create a custom resource pack that includes Hardcore Hearts and a death cannon sound
