@@ -27,7 +27,7 @@ If a player puts on a piece of armor, they will begin to take damage. This mecha
 
 ### Finishing Up
 
-* Once you have tested everything and are ready to begin, enable the Hardcore mechanics in the ```naked_and_afraid.sk``` file by removing the hashtags at the bottom of the "Death System" section.
+* Once you have tested everything and are ready to begin, enable the Hardcore mechanics by running ```/hardcore-enable``` in the console.
 * Enjoy!
 
 ## Author
