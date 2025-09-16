@@ -64,7 +64,7 @@ on quit:
 
 # The above method does not fully obscure the tablist, as it still shows players' faces.
 # In server.properties, set "online-mode" to "false" and install the latest version of SkinsRestorer in your /plugins folder.
-# IMPORTANT: Set a whitelist if you choose this option. Hackers can easily infiltrate as any OP account and potentially grief the server.
+# IMPORTANT: Install a password plugin if you choose this option. Anyone can join using any account, otherwise.
 # IMPORTANT: You should make this decision before the server starts. Players will "lose" their inventory and progress if you switch between online & offline mode.
 
 # =====================================================
