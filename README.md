@@ -8,7 +8,7 @@ Naked and Afraid is a YouTube series where Minecraft content creators try to sur
 
 This means that all means of communication—direct or indirect—are disabled. Join & leave messages, advancements, and coordinates are disabled. Totems of undying are also not allowed in this gamemode. Every time a player dies, a universal death cannon sounds, giving confirmation to players that someone has died, although they might not know exactly who.
 
-If a player puts on a piece of armor, they will begin to take damage. This mechanic cements this SMP as notoriously difficult, where seasoned players will likely have the edge. Ultra Hardcore (UHC) mechanics are optional, where natural regeneration is disabled and players can only heal via golden apples, suspicious stews, and potions.
+If a player puts on a piece of armor, they will begin to take damage. This mechanic cements this SMP as notoriously difficult, where every decision matters. Ultra Hardcore (UHC) mechanics are optional, where natural regeneration is disabled and players can only heal via golden apples, suspicious stews, and potions.
 
 ## Getting Started
 
@@ -16,13 +16,13 @@ If a player puts on a piece of armor, they will begin to take damage. This mecha
 
 * Install the latest version of Skript on the SpigotMC website [here](https://www.spigotmc.org/resources/skript.114544/) (note that the latest version often requires the most recent build of Minecraft).
 * You must have Java 17 or later installed on your server for Skript to function.
-* Install Simple Voice Chat [here](https://modrinth.com/plugin/simple-voice-chat/versions) for both your server and your client (ex. Paper jar goes in the server's ```/plugins``` folder, while Fabric jar goes in your own ```/mods``` folder). All members must install Simple Voice Chat on their client.
+* Install Simple Voice Chat [here](https://modrinth.com/plugin/simple-voice-chat/versions) for both your server and your client (ex. Paper jar goes in the server's ```/plugins``` folder, while Fabric jar goes in your own ```/mods``` folder). All members must install Simple Voice Chat on their client to hear one another.
 * Open an additional port on your server. Navigate to ```plugins/voicechat/voicechat-server.properties``` and set the "port" value to that additional port. Restart the server to apply the changes.
 * It's recommended to use a Hardcore Hearts texture pack [like this one](https://modrinth.com/resourcepack/hardcore-hearts) to enhance your experience.
 
 ### Installing
 
-* Download the ```naked_and_afraid.sk``` file, and place it in ```plugins/Skript/scripts/naked_and_afraid.sk```.
+* Download the ```naked_and_afraid.sk``` file, and place it in ```plugins/Skript/scripts```.
 * Follow the configuration instructions at the top of the file, or customize them to your preference.
 
 ### Finishing Up
@@ -48,6 +48,7 @@ Created by [Enzec](https://enzec.net)
  
 ## To Do
 
-* Fix the tablist visibility issue
-* Disable dispensers from dispensing armor
+* Fix the tablist visibility issue [(the original series actually had it enabled)](https://imgur.com/a/6CXRsa6)
+   * Since it's difficult to hide or disable the tablist directly, it can potentially be removed in a resource pack or external mod
+* Disable dispensers from dispensing armor (to prevent Curse of Binding traps)
 * Create a custom resource pack that includes Hardcore Hearts and a death cannon sound
