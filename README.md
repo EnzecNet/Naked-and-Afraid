@@ -46,6 +46,8 @@ Created by [Enzec](https://enzec.net)
 
 ## Version History
 
+* 1.4
+    * Created some additional safety measures
 * 1.3
     * Removed villagers
     * Made changes to the tablist
