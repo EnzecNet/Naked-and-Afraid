@@ -2,7 +2,7 @@
 # Naked and Afraid SMP - Complete Implementation
 # Author: Enzec (enzec.net)
 # Save to plugins/Skript/scripts/naked_and_afraid.sk
-# Version: 1.3
+# Version: 1.4
 
 # =====================================================
 # SERVER.PROPERTIES & GAMERULE SETTINGS TO CONFIGURE:
@@ -64,7 +64,7 @@ on quit:
 
 # The above method does not fully obscure the tablist, as it still shows players' faces.
 # In server.properties, set "online-mode" to "false" and install the latest version of SkinsRestorer in your /plugins folder.
-# IMPORTANT: Install a password plugin if you choose this option. Anyone can join using any account, otherwise.
+# IMPORTANT: Set a whitelist if you choose this option. Hackers can easily infiltrate as any OP account and potentially grief the server.
 # IMPORTANT: You should make this decision before the server starts. Players will "lose" their inventory and progress if you switch between online & offline mode.
 
 # =====================================================
@@ -151,6 +151,17 @@ on respawn:
 		set {_reason} to "&cYou should have been more careful"
 		kick player due to {_reason}
 		ban player due to {_reason}
+  
+# =====================================================
+# ADDITIONAL SAFETY MEASURES
+# =====================================================
+on damage of player:
+	if attacker is a player:
+		cancel event
+
+on gamemode change:
+	if player is not op:
+		cancel event
 
 # =====================================================
 # STARTUP MESSAGE
