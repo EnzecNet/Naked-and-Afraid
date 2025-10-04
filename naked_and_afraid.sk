@@ -95,7 +95,7 @@ every 10 ticks:
 		if loop-player is dead:
 			stop
 		set {_armor} to false
-		if loop-player's helmet is not air or skeleton_skull or wither_skeleton_skull or dragon_head:
+		if loop-player's helmet is not air or skeleton_skull or wither_skeleton_skull or zombie_head or player_head or creeper_head or dragon_head or piglin_head or carved_pumpkin:
 			set {_armor} to true
 		if loop-player's chestplate is not air or elytra:
 			set {_armor} to true
