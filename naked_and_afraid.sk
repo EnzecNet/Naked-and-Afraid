@@ -2,7 +2,7 @@
 # Naked and Afraid SMP - Complete Implementation
 # Author: Enzec (enzec.net)
 # Save to plugins/Skript/scripts/naked_and_afraid.sk
-# Version: 1.4
+# Version: 1.5
 
 # =====================================================
 # SERVER.PROPERTIES & GAMERULE SETTINGS TO CONFIGURE:
@@ -19,16 +19,16 @@
 # - /gamerule announceAdvancements false (no advancements)
 # - /gamerule showDeathMessages false (no death messages)
 # - /gamerule reducedDebugInfo true (no coordinates)
-# - /worldborder set 30000 (set the bounds)
+# - /worldborder set 30000 & /worldborder center 0 0 (set the bounds)
 # - /hardcore-enable (recommended to run this command once you're completely ready)
 # =====================================================
 
 # =====================================================
 # DISABLE CHAT SYSTEM
 # =====================================================
-on chat:
-	cancel event
-	send "&cChat is disabled! Use proximity voice chat to communicate." to player
+#on chat:
+	#cancel event
+	#send "&cChat is disabled! Use proximity voice chat to communicate." to player
 
 # Disable all chat-related commands
 command /msg <player> <text>:
@@ -52,19 +52,13 @@ command /me <text>:
 # =====================================================
 on join:
 	set join message to ""
-	wait 1 tick
-	set player's tablist name to "&k00000"
-	loop all players:
-		set loop-player's tablist name to "&k00000"
 
 on quit:
 	set quit message to ""
-	loop all players:
-		show player's tablist name to loop-player
 
 # The above method does not fully obscure the tablist, as it still shows players' faces.
 # In server.properties, set "online-mode" to "false" and install the latest version of SkinsRestorer in your /plugins folder.
-# IMPORTANT: Set a whitelist if you choose this option. Hackers can easily infiltrate as any OP account and potentially grief the server.
+# IMPORTANT: Set up a password plugin (like AuthMe) if you choose this option. Hackers can easily infiltrate as any OP account and potentially grief the server.
 # IMPORTANT: You should make this decision before the server starts. Players will "lose" their inventory and progress if you switch between online & offline mode.
 
 # =====================================================
@@ -72,13 +66,27 @@ on quit:
 # =====================================================
 on player pickup of totem of undying:
 	cancel event
-    
+
 # =====================================================
-# DISABLE VILLAGERS
+# DISABLE NATURALLY-SPAWNING VILLAGERS
 # =====================================================
-on spawn of villagers:
-	cancel event
-    
+on chunk load:
+	wait 1 tick
+	loop entities in event-chunk:
+		if loop-entity is a villager:
+			if {cured.%uuid of loop-entity%} is not set:
+				delete loop-entity
+
+on spawn of villager:
+	if spawn reason is cured:
+		wait 1 tick
+		set {cured.%uuid of event-entity%} to true
+
+on death of villager:
+	if {cured.%uuid of victim%} is set:
+		wait 1 tick
+		delete {cured.%uuid of victim%}
+
 # =====================================================
 # ARMOR DAMAGE SYSTEM
 # =====================================================
@@ -117,12 +125,17 @@ on death:
 			loop all players:
 				play sound "entity.wither.spawn" with volume 3 and pitch 0.9 to loop-player
 			send "&4[DEATH CANNON] &c%victim% has been eliminated from the SMP!" to console
+			wait 5 seconds
+			set {_reason} to "&cYou should have been more careful"
+			kick victim due to {_reason}
+			ban victim due to {_reason}
 			stop
 	else:
 		set death message to ""
         
 options:
-    hardcore-enabled: false # Default state (false = disabled, true = enabled)
+	hardcore-enabled: false # Default state (false = disabled, true = enabled)
+	prefix: [&eNaked &fand &6Afraid&7]
 
 command /hardcore-enable:
     trigger:
@@ -151,7 +164,24 @@ on respawn:
 		set {_reason} to "&cYou should have been more careful"
 		kick player due to {_reason}
 		ban player due to {_reason}
-  
+        
+# =====================================================
+# SPAWN LOCATION COMMAND (OPTIONAL)
+# =====================================================
+variables:
+	{spawn.locations::*} = "none"
+    
+command /setspawn <player>:
+	permission: op
+	trigger:
+		set {spawn.locations::%arg-1%} to location of player
+		send "{@prefix}&aSpawn location set for %arg-1% at your current position." to player
+		send "&7Location: %location of player%" to player
+
+on first join:
+	if {spawn.locations::%player%} is set:
+		teleport player to {spawn.locations::%player%}
+
 # =====================================================
 # ADDITIONAL SAFETY MEASURES
 # =====================================================
@@ -170,6 +200,7 @@ on script load:
 	send "&7[&eNaked &fand &6Afraid&7] &aScript loaded successfully!" to console
 	send "&7- Remember to set server.properties: hide-online-players=true, pvp=false, spawn-npcs=false, spawn-protection=0" to console
 	send "&7- Remember to run gamerules: naturalRegeneration false, announceAdvancements false, showDeathMessages false, reducedDebugInfo true" to console
+	send "&7- Make sure to set all player spawns with /setspawn <player> before they join" to console
 
 on script unload:
 	send "&7[&eNaked &fand &6Afraid&7] &cScript unloaded!" to console
