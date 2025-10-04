@@ -26,7 +26,7 @@ If a player puts on a piece of armor, they will begin to take damage. This mecha
 * Download the ```naked_and_afraid.sk``` file, and place it in ```plugins/Skript/scripts```.
 * Follow the configuration instructions at the top of the file, or customize them to your preference.
 
-### Optional Tablist Configuration
+### Tablist Configuration (Optional)
 
 In the original Naked and Afraid series, the tablist is disabled to remove the ability to identify who's still alive. However, since it's difficult to hide or disable the tablist directly, it ended up looking like [this](https://imgur.com/a/6CXRsa6)—the same is true for this plugin. However, if you want to completely obscure the tablist by removing players' faces, follow these instructions:
 * In ```server.properties```, set "online-mode" to "false" and install the latest version of [SkinsRestorer](https://modrinth.com/plugin/skinsrestorer) in your ```/plugins``` folder.
@@ -34,6 +34,14 @@ In the original Naked and Afraid series, the tablist is disabled to remove the a
 * If you decide upon this configuration, make sure to do it before any player activity. Doing so later on will erase all players' inventories and progress.
 #### Alternative Method
 To "remove" the tablist without potentially compromising the server, simply have all members remove the "List Players" keybind by clicking on its adjacent button and hitting escape.
+
+### Setting Spawnpoints (Optional)
+
+To create spawnpoints (if you want players to begin scattered around the map), use the command ```/setspawn <player>``` in the location you want them to spawn. Consider providing them with a compass and an instruction book in a nearby chest. Be sure to set this up before any players join.
+
+### Tips
+
+* To reverse a player's ban, enter ```/hardcore-disable``` into the console followed by ```/pardon <player>```.
 
 ### Finishing Up
 
@@ -46,6 +54,10 @@ Created by [Enzec](https://enzec.net)
 
 ## Version History
 
+* 1.5
+    * Updated villager mechanics—they no longer spawn naturally and can only be obtained from curing zombie villagers
+    * Added a first-join spawn location system
+    * Refined the hardcore death system
 * 1.4
     * Created some additional safety measures
 * 1.3
