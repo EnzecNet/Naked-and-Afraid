@@ -124,7 +124,7 @@ on death:
 			set death message to ""
 			# Play death cannon sound to all online players (server-wide)
 			loop all players:
-				play sound "death.cannon" with volume 3 and pitch 0.9 to loop-player
+				play sound "entity.wither.spawn" with volume 3 and pitch 0.9 to loop-player
 			send "&4[DEATH CANNON] &c%victim% has been eliminated from the SMP!" to console
 			wait 5 seconds
 			set {_reason} to "&cYou should have been more careful"
