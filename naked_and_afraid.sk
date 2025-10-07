@@ -10,7 +10,6 @@
 # In server.properties:
 # - hide-online-players=true
 # - pvp=false
-# - spawn-npcs=false
 # - spawn-protection=0
 # - online-mode=false (fully hide tablist - optional, needs SkinsRestorer plugin)
 # 
@@ -182,7 +181,7 @@ on gamemode change:
 # =====================================================
 on script load:
 	send "&7[&eNaked &fand &6Afraid&7] &aScript loaded successfully!" to console
-	send "&7- Remember to set server.properties: hide-online-players=true, pvp=false, spawn-npcs=false, spawn-protection=0" to console
+	send "&7- Remember to set server.properties: hide-online-players=true, pvp=false, spawn-protection=0" to console
 	send "&7- Remember to run gamerules: naturalRegeneration false, announceAdvancements false, showDeathMessages false, reducedDebugInfo true" to console
 
 on script unload:
