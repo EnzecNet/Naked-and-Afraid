@@ -26,9 +26,9 @@
 # =====================================================
 # DISABLE CHAT SYSTEM
 # =====================================================
-#on chat:
-	#cancel event
-	#send "&cChat is disabled! Use proximity voice chat to communicate." to player
+on chat:
+	cancel event
+	send "&cChat is disabled! Use proximity voice chat to communicate." to player
 
 # Disable all chat-related commands
 command /msg <player> <text>:
