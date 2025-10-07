@@ -2,7 +2,7 @@
 # Naked and Afraid SMP - Complete Implementation
 # Author: Enzec (enzec.net)
 # Save to plugins/Skript/scripts/naked_and_afraid.sk
-# Version: 1.5
+# Version: 1.6
 
 # =====================================================
 # SERVER.PROPERTIES & GAMERULE SETTINGS TO CONFIGURE:
@@ -52,6 +52,10 @@ command /me <text>:
 # =====================================================
 on join:
 	set join message to ""
+	wait 1 tick
+	set player's tablist name to "&k00000"
+	loop all players:
+		set loop-player's tablist name to "&k00000"
 
 on quit:
 	set quit message to ""
@@ -120,10 +124,7 @@ on death:
 			set death message to ""
 			# Play death cannon sound to all online players (server-wide)
 			loop all players:
-				# play custom sound if present; fallback to wither spawn explosion-ish sound:
-				play sound "death.cannon" with volume 4 and pitch 0.9 to loop-player # requires resourcepack; fallback below if sound missing
-			loop all players:
-				play sound "entity.wither.spawn" with volume 3 and pitch 0.9 to loop-player
+				play sound "death.cannon" with volume 3 and pitch 0.9 to loop-player
 			send "&4[DEATH CANNON] &c%victim% has been eliminated from the SMP!" to console
 			wait 5 seconds
 			set {_reason} to "&cYou should have been more careful"
@@ -164,23 +165,6 @@ on respawn:
 		set {_reason} to "&cYou should have been more careful"
 		kick player due to {_reason}
 		ban player due to {_reason}
-        
-# =====================================================
-# SPAWN LOCATION COMMAND (OPTIONAL)
-# =====================================================
-variables:
-	{spawn.locations::*} = "none"
-    
-command /setspawn <player>:
-	permission: op
-	trigger:
-		set {spawn.locations::%arg-1%} to location of player
-		send "{@prefix}&aSpawn location set for %arg-1% at your current position." to player
-		send "&7Location: %location of player%" to player
-
-on first join:
-	if {spawn.locations::%player%} is set:
-		teleport player to {spawn.locations::%player%}
 
 # =====================================================
 # ADDITIONAL SAFETY MEASURES
@@ -200,16 +184,9 @@ on script load:
 	send "&7[&eNaked &fand &6Afraid&7] &aScript loaded successfully!" to console
 	send "&7- Remember to set server.properties: hide-online-players=true, pvp=false, spawn-npcs=false, spawn-protection=0" to console
 	send "&7- Remember to run gamerules: naturalRegeneration false, announceAdvancements false, showDeathMessages false, reducedDebugInfo true" to console
-	send "&7- Make sure to set all player spawns with /setspawn <player> before they join" to console
 
 on script unload:
 	send "&7[&eNaked &fand &6Afraid&7] &cScript unloaded!" to console
 
-# =====================================================
-# WORLD BORDER REMINDER
-# =====================================================
-# Note: Set world border manually with: /worldborder set 30000
-# This creates a 15000 block radius from spawn (30000 total diameter)
-# =====================================================
 # END OF SCRIPT
 # =====================================================
