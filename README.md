@@ -43,6 +43,7 @@ To "remove" the tablist without potentially compromising the server, simply have
 ### Tips
 
 * To reverse a player's ban, enter ```/hardcore-disable``` into the console followed by ```/pardon <player>```.
+* This entire system functions without having to set "hardcore" to "true" in ```server.properties```. Doing so is completely optional.
 
 ## Author
 
