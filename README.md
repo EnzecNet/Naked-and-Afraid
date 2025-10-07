@@ -35,18 +35,14 @@ In the original Naked and Afraid series, the tablist is disabled to remove the a
 #### Alternative Method
 To "remove" the tablist without potentially compromising the server, simply have all members remove the "List Players" keybind by clicking on its adjacent button and hitting escape.
 
-### Setting Spawnpoints (Optional)
-
-To create spawnpoints (if you want players to begin scattered around the map), use the command ```/setspawn <player>``` in the location you want them to spawn. Consider providing them with a compass and an instruction book in a nearby chest. Be sure to set this up before any players join.
-
-### Tips
-
-* To reverse a player's ban, enter ```/hardcore-disable``` into the console followed by ```/pardon <player>```.
-
 ### Finishing Up
 
 * Once you have tested everything and are ready to begin, enable the Hardcore mechanics by running ```/hardcore-enable``` in the console.
 * Enjoy!
+
+### Tips
+
+* To reverse a player's ban, enter ```/hardcore-disable``` into the console followed by ```/pardon <player>```.
 
 ## Author
 
@@ -54,8 +50,11 @@ Created by [Enzec](https://enzec.net)
 
 ## Version History
 
+* 1.6
+    * Temporarily removed the spawn location system due to a bug
+    * Wearable non-armor items no longer harm the player
 * 1.5
-    * Updated villager mechanics—they no longer spawn naturally and can only be obtained from curing zombie villagers
+    * Villagers no longer spawn naturally and can only be obtained from curing zombie villagers
     * Added a first-join spawn location system
     * Refined the hardcore death system
 * 1.4
