@@ -75,5 +75,9 @@ Created by [Enzec](https://enzec.net)
  
 ## To Do
 
+* Re-configured spawn system
+* Supply drop system
+* Challenge voting system
+* "Extraction" final challenge
 * Disable dispensers from dispensing armor (to prevent Curse of Binding traps)
 * Create a custom resource pack that includes Hardcore Hearts and a death cannon sound
