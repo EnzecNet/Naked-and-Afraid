@@ -11,7 +11,6 @@
 # - hide-online-players=true
 # - difficulty=hard
 # - spawn-protection=0
-# - pvp=false (pre-1.21.9, PvP is still disabled due to an additional safety measure below)
 # - online-mode=false (fully hide tablist - optional, needs SkinsRestorer plugin)
 # 
 # Run these commands in the console:
@@ -19,6 +18,7 @@
 # - /gamerule announceAdvancements false (no advancements)
 # - /gamerule showDeathMessages false (no death messages)
 # - /gamerule reducedDebugInfo true (no coordinates)
+# - /gamerule locatorBar false (no player locator bar)
 # - /worldborder set 30000 & /worldborder center 0 0 (set the bounds)
 # - /hardcore-enable (recommended to run this command once you're completely ready)
 # =====================================================
@@ -183,7 +183,7 @@ on gamemode change:
 on script load:
 	send "&7[&eNaked &fand &6Afraid&7] &aScript loaded successfully!" to console
 	send "&7- Remember to set server.properties: hide-online-players=true, difficulty=hard, spawn-protection=0" to console
-	send "&7- Remember to run gamerules: naturalRegeneration false, announceAdvancements false, showDeathMessages false, reducedDebugInfo true" to console
+	send "&7- Remember to run gamerules: naturalRegeneration false, announceAdvancements false, showDeathMessages false, reducedDebugInfo true, locatorBar false" to console
 
 on script unload:
 	send "&7[&eNaked &fand &6Afraid&7] &cScript unloaded!" to console
