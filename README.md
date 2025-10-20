@@ -36,7 +36,8 @@ If a player puts on a piece of armor, they will begin to take damage. This mecha
 
 * **IMPORTANT**: In most cases, you must set the gamerules in each dimension separately (overworld, nether, end). For a quicker solution, use ```/naa-gamerules```.
 * To reverse a player's ban, enter ```/hardcore-disable``` into the console followed by ```/pardon <player>```.
-* This entire system functions without having to set "hardcore" to "true" in ```server.properties```. Doing so is completely optional.
+* Make sure to reset your world after setting "hardcore" to "true" in ```server.properties``` for the hardcore hearts to appear. Otherwise, you could use a resource pack [like this one](https://modrinth.com/resourcepack/hardcore-hearts).
+* This entire system functions without having to set "hardcore" to "true" in ```server.properties```. Doing so is completely optional, but recommended for players who don't use the resource pack.
 
 ## Author
 
@@ -44,6 +45,9 @@ Created by [Enzec](https://enzec.net)
 
 ## Version History
 
+* 1.8
+    * Added a new command for gamerules
+    * Hardcore mechanics refined
 * 1.7
     * Tablist has been fully removed
 * 1.6
