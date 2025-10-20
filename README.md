@@ -34,6 +34,7 @@ If a player puts on a piece of armor, they will begin to take damage. This mecha
 
 ### Tips
 
+* **IMPORTANT**: In most cases, you must set the gamerules in each dimension separately (overworld, nether, end). For a quicker solution, use ```/naa-gamerules```.
 * To reverse a player's ban, enter ```/hardcore-disable``` into the console followed by ```/pardon <player>```.
 * This entire system functions without having to set "hardcore" to "true" in ```server.properties```. Doing so is completely optional.
 
