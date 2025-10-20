@@ -11,7 +11,7 @@
 # - hide-online-players=true
 # - difficulty=hard
 # - spawn-protection=0
-# - online-mode=false (fully hide tablist - optional, needs SkinsRestorer plugin)
+# - hardcore=true
 # 
 # Run /naa-gamerules to execute the following altogether (you don't need to run the individual commands):
 # - /gamerule announceAdvancements false (no advancements)
@@ -196,7 +196,7 @@ on gamemode change:
 # =====================================================
 on script load:
 	send "&7[&eNaked &fand &6Afraid&7] &aScript loaded successfully!" to console
-	send "&7- Remember to set server.properties: hide-online-players=true, difficulty=hard, spawn-protection=0" to console
+	send "&7- Remember to set server.properties: hide-online-players=true, difficulty=hard, spawn-protection=0, hardcore=true" to console
 	send "&7- Remember to run /naa-gamerules (naturalRegeneration is not included, you must set it in each dimension to enable it or modify the code)"
 
 on script unload:
