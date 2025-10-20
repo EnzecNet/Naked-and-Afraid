@@ -19,7 +19,6 @@ If a player puts on a piece of armor, they will begin to take damage. This mecha
 * You must have Java 17 or later installed on your server for Skript to function.
 * Install Simple Voice Chat [here](https://modrinth.com/plugin/simple-voice-chat/versions) for both your server and your client (ex. Paper jar goes in the server's ```/plugins``` folder, while Fabric jar goes in your own ```/mods``` folder). All members must install Simple Voice Chat on their client to hear one another.
 * Open an additional port on your server. Navigate to ```plugins/voicechat/voicechat-server.properties``` and set the "port" value to that additional port. Restart the server to apply the changes.
-* It's recommended to use a Hardcore Hearts texture pack [like this one](https://modrinth.com/resourcepack/hardcore-hearts) to enhance your experience.
 * Also consider enabling a whitelist. In ```server.properties```, set "white-list" to "true" and run ```/whitelist on``` in the console. Use ```whitelist add <player>``` to add all server members to the whitelist.
 
 ### Installing
