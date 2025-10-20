@@ -2,7 +2,7 @@
 # Naked and Afraid SMP - Complete Implementation
 # Author: Enzec (enzec.net)
 # Save to plugins/Skript/scripts/naked_and_afraid.sk
-# Version: 1.7
+# Version: 1.8
 
 # =====================================================
 # SERVER.PROPERTIES & GAMERULE SETTINGS TO CONFIGURE:
@@ -13,12 +13,14 @@
 # - spawn-protection=0
 # - online-mode=false (fully hide tablist - optional, needs SkinsRestorer plugin)
 # 
-# Run these commands in the console:
-# - /gamerule naturalRegeneration false (UHC - optional)
+# Run /naa-gamerules to execute the following altogether (you don't need to run the individual commands):
 # - /gamerule announceAdvancements false (no advancements)
 # - /gamerule showDeathMessages false (no death messages)
 # - /gamerule reducedDebugInfo true (no coordinates)
 # - /gamerule locatorBar false (no player locator bar)
+# Natural regen is not included, so run this command in each dimension to enable it:
+# - /gamerule naturalRegeneration false (UHC mechanics)
+# Run these commands in the console:
 # - /worldborder set 30000 & /worldborder center 0 0 (set the bounds)
 # - /hardcore-enable (recommended to run this command once you're completely ready)
 # =====================================================
@@ -129,32 +131,32 @@ on death:
 			stop
 	else:
 		set death message to ""
-        
+		
 options:
 	hardcore-enabled: false # Default state (false = disabled, true = enabled)
 	prefix: [&eNaked &fand &6Afraid&7]
 
 command /hardcore-enable:
-    trigger:
-        if sender is console:
-            if {hardcore.enabled} is true:
-                send "&cHardcore mechanics are already enabled." to console
-            else:
-                set {hardcore.enabled} to true
-                send "&aHardcore mechanics have been ENABLED." to console
-        else:
-            send "&cOnly the console can run this command."
+	trigger:
+		if sender is console:
+			if {hardcore.enabled} is true:
+				send "&cHardcore mechanics are already enabled." to console
+			else:
+				set {hardcore.enabled} to true
+				send "&aHardcore mechanics have been ENABLED." to console
+		else:
+			send "&cOnly the console can run this command."
 
 command /hardcore-disable:
-    trigger:
-        if sender is console:
-            if {hardcore.enabled} is false:
-                send "&cHardcore mechanics are already disabled." to console
-            else:
-                set {hardcore.enabled} to false
-                send "&dHardcore mechanics have been DISABLED." to console
-        else:
-            send "&cOnly the console can run this command."
+	trigger:
+		if sender is console:
+			if {hardcore.enabled} is false:
+				send "&cHardcore mechanics are already disabled." to console
+			else:
+				set {hardcore.enabled} to false
+				send "&dHardcore mechanics have been DISABLED." to console
+		else:
+			send "&cOnly the console can run this command."
 
 on respawn:
 	{hardcore.enabled} is true:
@@ -163,8 +165,24 @@ on respawn:
 		ban player due to {_reason}
 
 # =====================================================
-# ADDITIONAL SAFETY MEASURES
+# ADDITIONAL FEATURES & SAFETY MEASURES
 # =====================================================
+command /naa-gamerules:
+	permission: op
+	trigger:
+		make console execute "/execute in minecraft:overworld run gamerule announceAdvancements false"
+		make console execute "/execute in minecraft:the_nether run gamerule announceAdvancements false"
+		make console execute "/execute in minecraft:the_end run gamerule announceAdvancements false"
+		make console execute "/execute in minecraft:overworld run gamerule showDeathMessages false"
+		make console execute "/execute in minecraft:the_nether run gamerule showDeathMessages false"
+		make console execute "/execute in minecraft:the_end run gamerule showDeathMessages false"
+		make console execute "/execute in minecraft:overworld run gamerule reducedDebugInfo false"
+		make console execute "/execute in minecraft:the_nether run gamerule reducedDebugInfo false"
+		make console execute "/execute in minecraft:the_end run gamerule reducedDebugInfo false" 
+		make console execute "/execute in minecraft:overworld run gamerule locatorBar false"
+		make console execute "/execute in minecraft:the_nether run gamerule locatorBar false"
+		make console execute "/execute in minecraft:the_end run gamerule locatorBar false"
+
 on damage of player:
 	if attacker is a player:
 		cancel event
@@ -179,10 +197,11 @@ on gamemode change:
 on script load:
 	send "&7[&eNaked &fand &6Afraid&7] &aScript loaded successfully!" to console
 	send "&7- Remember to set server.properties: hide-online-players=true, difficulty=hard, spawn-protection=0" to console
-	send "&7- Remember to run gamerules: naturalRegeneration false, announceAdvancements false, showDeathMessages false, reducedDebugInfo true, locatorBar false" to console
+	send "&7- Remember to run /naa-gamerules (naturalRegeneration is not included, you must set it in each dimension to enable it or modify the code)"
 
 on script unload:
 	send "&7[&eNaked &fand &6Afraid&7] &cScript unloaded!" to console
 
 # END OF SCRIPT
 # =====================================================
+
