@@ -15,6 +15,7 @@ If a player puts on a piece of armor, they will begin to take damage. This mecha
 ### Dependencies & Enhancements
 
 * Install the latest version of Skript on the SpigotMC website [here](https://www.spigotmc.org/resources/skript.114544/) (note that the latest version often requires the most recent build of Minecraft).
+* Install the latest version of SkBee [here](https://www.spigotmc.org/resources/skbee-skript-addon.75839/). Place both the Skript and SkBee .jar files in ```/plugins```.
 * You must have Java 17 or later installed on your server for Skript to function.
 * Install Simple Voice Chat [here](https://modrinth.com/plugin/simple-voice-chat/versions) for both your server and your client (ex. Paper jar goes in the server's ```/plugins``` folder, while Fabric jar goes in your own ```/mods``` folder). All members must install Simple Voice Chat on their client to hear one another.
 * Open an additional port on your server. Navigate to ```plugins/voicechat/voicechat-server.properties``` and set the "port" value to that additional port. Restart the server to apply the changes.
@@ -25,15 +26,6 @@ If a player puts on a piece of armor, they will begin to take damage. This mecha
 
 * Download the ```naked_and_afraid.sk``` file, and place it in ```plugins/Skript/scripts```.
 * Follow the configuration instructions at the top of the file, or customize them to your preference.
-
-### Tablist Configuration (Optional)
-
-In the original Naked and Afraid series, the tablist is disabled to remove the ability to identify who's still alive. However, since it's difficult to hide or disable the tablist directly, it ended up looking like [this](https://imgur.com/a/6CXRsa6)—the same is true for this plugin. However, if you want to completely obscure the tablist by removing players' faces, follow these instructions:
-* In ```server.properties```, set "online-mode" to "false" and install the latest version of [SkinsRestorer](https://modrinth.com/plugin/skinsrestorer) in your ```/plugins``` folder.
-* It's strongly recommended to add a [password plugin](https://www.spigotmc.org/resources/authmereloaded.6269/), as it prevents hackers from exploiting a cracked server and other members from logging in as you. 
-* If you decide upon this configuration, make sure to do it before any player activity. Doing so later on will erase all players' inventories and progress.
-#### Alternative Method
-To "remove" the tablist without potentially compromising the server, simply have all members remove the "List Players" keybind by clicking on its adjacent button and hitting escape.
 
 ### Finishing Up
 
@@ -51,6 +43,8 @@ Created by [Enzec](https://enzec.net)
 
 ## Version History
 
+* 1.7
+    * Tablist has been fully removed
 * 1.6
     * Temporarily removed the spawn location system due to a bug
     * Wearable non-armor items no longer harm the player
