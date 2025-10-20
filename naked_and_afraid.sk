@@ -2,7 +2,7 @@
 # Naked and Afraid SMP - Complete Implementation
 # Author: Enzec (enzec.net)
 # Save to plugins/Skript/scripts/naked_and_afraid.sk
-# Version: 1.6
+# Version: 1.7
 
 # =====================================================
 # SERVER.PROPERTIES & GAMERULE SETTINGS TO CONFIGURE:
@@ -53,17 +53,13 @@ command /me <text>:
 on join:
 	set join message to ""
 	wait 1 tick
-	set player's tablist name to "&k00000"
 	loop all players:
-		set loop-player's tablist name to "&k00000"
+		set tablist header of loop-player to "&7[&eNaked &fand &6Afraid&7]"
+		set tablist footer of loop-player to "&cGood luck!"
+		unlist all players for loop-player
 
 on quit:
 	set quit message to ""
-
-# The above method does not fully obscure the tablist, as it still shows players' faces.
-# In server.properties, set "online-mode" to "false" and install the latest version of SkinsRestorer in your /plugins folder.
-# IMPORTANT: Set up a password plugin (like AuthMe) if you choose this option. Hackers can easily infiltrate as any OP account and potentially grief the server.
-# IMPORTANT: You should make this decision before the server starts. Players will "lose" their inventory and progress if you switch between online & offline mode.
 
 # =====================================================
 # DISABLE TOTEMS OF UNDYING
