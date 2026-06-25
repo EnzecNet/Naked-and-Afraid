@@ -44,6 +44,8 @@ Created by [Enzec](https://enzec.net)
 
 ## Version History
 
+* 1.9
+    * Cleaned up some code
 * 1.8
     * Added a new command for gamerules
     * Hardcore mechanics refined
