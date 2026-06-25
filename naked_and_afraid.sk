@@ -80,7 +80,7 @@ on chunk load:
 				delete loop-entity
 
 on spawn of villager:
-	if spawn reason is cured:
+	if spawn reason is cured or breed or breeding:
 		wait 1 tick
 		set {cured.%uuid of event-entity%} to true
 
@@ -158,34 +158,31 @@ command /hardcore-disable:
 		else:
 			send "&cOnly the console can run this command."
 
-on respawn:
-	{hardcore.enabled} is true:
-		set {_reason} to "&cYou should have been more careful"
-		kick player due to {_reason}
-		ban player due to {_reason}
-
 # =====================================================
 # ADDITIONAL FEATURES & SAFETY MEASURES
 # =====================================================
 command /naa-gamerules:
 	permission: op
 	trigger:
-		make console execute "/execute in minecraft:overworld run gamerule announceAdvancements false"
-		make console execute "/execute in minecraft:the_nether run gamerule announceAdvancements false"
-		make console execute "/execute in minecraft:the_end run gamerule announceAdvancements false"
-		make console execute "/execute in minecraft:overworld run gamerule showDeathMessages false"
-		make console execute "/execute in minecraft:the_nether run gamerule showDeathMessages false"
-		make console execute "/execute in minecraft:the_end run gamerule showDeathMessages false"
-		make console execute "/execute in minecraft:overworld run gamerule reducedDebugInfo true"
-		make console execute "/execute in minecraft:the_nether run gamerule reducedDebugInfo true"
-		make console execute "/execute in minecraft:the_end run gamerule reducedDebugInfo true" 
-		make console execute "/execute in minecraft:overworld run gamerule locatorBar false"
-		make console execute "/execute in minecraft:the_nether run gamerule locatorBar false"
-		make console execute "/execute in minecraft:the_end run gamerule locatorBar false"
+		make console execute "/execute in minecraft:overworld run gamerule show_advancement_messages false"
+		make console execute "/execute in minecraft:the_nether run gamerule show_advancement_messages false"
+		make console execute "/execute in minecraft:the_end run gamerule show_advancement_messages false"
+		make console execute "/execute in minecraft:overworld run gamerule show_death_messages false"
+		make console execute "/execute in minecraft:the_nether run gamerule show_death_messages false"
+		make console execute "/execute in minecraft:the_end run gamerule show_death_messages false"
+		make console execute "/execute in minecraft:overworld run gamerule reduced_debug_info true"
+		make console execute "/execute in minecraft:the_nether run gamerule reduced_debug_info true"
+		make console execute "/execute in minecraft:the_end run gamerule reduced_debug_info true" 
+		make console execute "/execute in minecraft:overworld run gamerule locator_bar false"
+		make console execute "/execute in minecraft:the_nether run gamerule locator_bar false"
+		make console execute "/execute in minecraft:the_end run gamerule locator_bar false"
+		make console execute "/execute in minecraft:overworld run difficulty hard"
+		make console execute "/execute in minecraft:the_nether run difficulty hard"
+		make console execute "/execute in minecraft:the_end run difficulty hard"
+		make console execute "/execute in minecraft:overworld run gamerule pvp false"
+		make console execute "/execute in minecraft:the_nether run gamerule pvp false"
+		make console execute "/execute in minecraft:the_end run gamerule pvp false"
 
-on damage of player:
-	if attacker is a player:
-		cancel event
 
 on gamemode change:
 	if player is not op:
