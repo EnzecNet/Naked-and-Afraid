@@ -13,11 +13,7 @@
 # - spawn-protection=0
 # - hardcore=true
 # 
-# Run /naa-gamerules to execute the following altogether (you don't need to run the individual commands):
-# - /gamerule announceAdvancements false (no advancements)
-# - /gamerule showDeathMessages false (no death messages)
-# - /gamerule reducedDebugInfo true (no coordinates)
-# - /gamerule locatorBar false (no player locator bar)
+# Run /naa-gamerules to enable NAA mechanics
 # Natural regen is not included, so run this command in each dimension to enable it:
 # - /gamerule naturalRegeneration false (UHC mechanics)
 # Run these commands in the console:
