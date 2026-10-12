@@ -2,7 +2,7 @@
 # Naked and Afraid SMP - Complete Implementation
 # Author: Enzec (enzec.net)
 # Save to plugins/Skript/scripts/naked_and_afraid.sk
-# Version: 1.9
+# Version: 2.0
 
 # =====================================================
 # SERVER.PROPERTIES & GAMERULE SETTINGS TO CONFIGURE:
@@ -45,6 +45,10 @@ command /me <text>:
 	trigger:
 		send "&cAction messages are disabled!" to player
 
+command /say:
+	trigger:
+		send "&cChat is disabled!" to player
+
 # =====================================================
 # DISABLE JOIN/LEAVE MESSAGES & OBSCURE TAB LIST
 # =====================================================
@@ -64,6 +68,9 @@ on quit:
 # =====================================================
 on player pickup of totem of undying:
 	cancel event
+
+on resurrect attempt:
+	cancel the event
 
 # =====================================================
 # DISABLE NATURALLY-SPAWNING VILLAGERS
@@ -111,23 +118,28 @@ every 10 ticks:
 # Enable it with "/hardcore-enable"
 # Disable it again with "/hardcore-disable"
 # =====================================================
-on death:
+on death of player:
 	{hardcore.enabled} is true:
-		if victim is player:
-			set {_p} to victim
-			set death message to ""
-			# Play death cannon sound to all online players (server-wide)
-			loop all players:
-				play sound "entity.wither.spawn" with volume 3 and pitch 0.9 to loop-player
-			send "&4[DEATH CANNON] &c%victim% has been eliminated from the SMP!" to console
-			wait 5 seconds
-			set {_reason} to "&cYou should have been more careful"
-			kick victim due to {_reason}
-			ban victim due to {_reason}
-			stop
+		set {died::%victim's uuid%} to true
+		set {_dead} to victim
+		set {_cause} to last damage cause of victim
+		play sound "deathcannon" with volume 4 and pitch 1 to all players
+		log "[Death Cannon] Player '%{_dead}%' has died. Cause: %{_cause}%."
 	else:
 		set death message to ""
-		
+
+on respawn:
+	if {died::%player's uuid%} is true:
+		delete {died::%player's uuid%}
+		wait 5 ticks
+		make console execute command "gamemode spectator %player%"
+		send title "&fYou died!" with subtitle "&cYou should have been more careful" to player
+
+command /deathcannontest:
+	permission: op
+	trigger:
+		play sound "deathcannon" with volume 4 and pitch 1 to all players
+
 options:
 	hardcore-enabled: false # Default state (false = disabled, true = enabled)
 	prefix: [&eNaked &fand &6Afraid&7]
@@ -172,16 +184,80 @@ command /naa-gamerules:
 		make console execute "/execute in minecraft:overworld run gamerule locator_bar false"
 		make console execute "/execute in minecraft:the_nether run gamerule locator_bar false"
 		make console execute "/execute in minecraft:the_end run gamerule locator_bar false"
+		make console execute "/execute in minecraft:overworld run gamerule spawn_phantoms false"
+		make console execute "/execute in minecraft:the_nether run gamerule spawn_phantoms false"
+		make console execute "/execute in minecraft:the_end run gamerule spawn_phantoms false"
 		make console execute "/execute in minecraft:overworld run difficulty hard"
 		make console execute "/execute in minecraft:the_nether run difficulty hard"
 		make console execute "/execute in minecraft:the_end run difficulty hard"
 		make console execute "/execute in minecraft:overworld run gamerule pvp false"
 		make console execute "/execute in minecraft:the_nether run gamerule pvp false"
 		make console execute "/execute in minecraft:the_end run gamerule pvp false"
+		make console execute "/execute in minecraft:overworld run gamerule natural_health_regeneration true"
+		make console execute "/execute in minecraft:the_nether run gamerule natural_health_regeneration true"
+		make console execute "/execute in minecraft:the_end run gamerule natural_health_regeneration true"
 
+command /sessionend:
+	permission: op
+	trigger:
+		broadcast "&7The session is over and the server will shut down soon"
 
-on gamemode change:
-	if player is not op:
+command /tpto <player>:
+	trigger:
+		if player's gamemode is spectator:
+			teleport player to arg-1
+
+command /setspawn <text>:
+	permission: op
+	trigger:
+		set {_name} to arg-1 in lowercase
+		set {_loc} to location of executor
+		if {_name} is not set:
+			send "{@prefix} &cUsage: /setspawn <player>"
+			stop
+
+		set {spawn::%{_name}%} to {_loc}
+
+		send "&aSpawn set for &e%arg-1%&a at &7%{_loc}%&a." to executor
+
+command /spawntpall:
+	permission: op
+	trigger:
+		set {_count} to 0
+		set {_missing} to 0
+
+		loop all players:
+			set {_name} to name of loop-player in lowercase
+			if {spawn::%{_name}%} is set:
+				teleport loop-player to {spawn::%{_name}%}
+				send "&aYou have been teleported to your spawn!" to loop-player
+				add 1 to {_count}
+			else:
+				send "&eNo spawn is set for you. Ask an admin to set one!" to loop-player
+				add 1 to {_missing}
+
+		send "&aTeleported &e%{_count}% &aplayer(s) to their spawns. &7(&e%{_missing}%&7 had no spawn set.)" to executor
+
+command /listspawns:
+	permission: op
+	trigger:
+		set {_count} to 0
+
+		send "&8&m----&r &6Player Spawns &8&m----" to executor
+
+		loop indices of {spawn::*}:
+			set {_loc} to {spawn::%loop-value%}
+			send "&e%loop-value% &7- &f%{_loc}%" to executor
+			add 1 to {_count}
+
+		if {_count} is 0:
+			send "&7No spawns have been set yet." to executor
+		else:
+			send "&8&m--------------------" to executor
+			send "&7Total: &e%{_count}% &7spawn(s)" to executor
+
+on damage of player:
+	if attacker is a player:
 		cancel event
 
 # =====================================================
@@ -190,11 +266,11 @@ on gamemode change:
 on script load:
 	send "&7[&eNaked &fand &6Afraid&7] &aScript loaded successfully!" to console
 	send "&7- Remember to set server.properties: hide-online-players=true, difficulty=hard, spawn-protection=0, hardcore=true" to console
-	send "&7- Remember to run /naa-gamerules (naturalRegeneration is not included, you must set it in each dimension to enable it or modify the code)"
+	wait 1 tick
+	execute console command "naa-gamerules"
 
 on script unload:
 	send "&7[&eNaked &fand &6Afraid&7] &cScript unloaded!" to console
 
 # END OF SCRIPT
 # =====================================================
-
