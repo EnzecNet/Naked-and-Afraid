@@ -8,7 +8,7 @@ Naked and Afraid is a YouTube series where Minecraft content creators try to sur
 
 This means that all means of communication—direct or indirect—are disabled. Join & leave messages, advancements, and coordinates are disabled. Totems of undying are also not allowed in this gamemode. Every time a player dies, a universal death cannon sounds, giving confirmation to players that someone has died, although they might not know exactly who.
 
-If a player puts on a piece of armor, they will begin to take damage. This mechanic cements this SMP as notoriously difficult, where every decision matters. Ultra Hardcore (UHC) mechanics are optional, where natural regeneration is disabled and players can only heal via golden apples, suspicious stews, and potions.
+If a player puts on a piece of armor, they will begin to take damage. This mechanic cements this SMP as notoriously difficult, where every decision matters. Ultra Hardcore (UHC) mechanics are off by default, where natural regeneration is disabled and players can only heal via golden apples, suspicious stews, and potions. To change this, set all three instances ```natural_health_regeneration``` to ```false``` in the "Additional Features" section of the script.
 
 ## Getting Started
 
@@ -26,6 +26,23 @@ If a player puts on a piece of armor, they will begin to take damage. This mecha
 * Download the ```naked_and_afraid.sk``` file, and place it in ```plugins/Skript/scripts```.
 * Follow the configuration instructions at the top of the file, or customize them to your preference.
 
+### Death Cannon
+
+* Paste the following into ```server.properties```, replacing the current values:
+```
+require-resource-pack=true
+resource-pack=https\://download.mc-packs.net/pack/cca8783ed3addfa7e18b925b7a052a48da5789dd.zip
+resource-pack-id=
+resource-pack-prompt=
+resource-pack-sha1=cca8783ed3addfa7e18b925b7a052a48da5789dd
+```
+
+### Spawn Commands
+
+* Travel to each location where you want a player to spawn. Use ```/setspawn <player's username>```, standing exactly where you want them to spawn.
+* You can use ```/listspawns``` to keep track of the spawns you've created.
+* Once everyone has logged on, use ```/spawntpall``` to send everyone to their spawns. If someone logs on late, you'd need to manually teleport them to their spawn since there isn't yet a command for individual tps. Use ```/spawntpall``` **only once** at the beginning of the server as to not accidentally send everyone back to their spawns.
+
 ### Finishing Up
 
 * Once you have tested everything and are ready to begin, enable the Hardcore mechanics by running ```/hardcore-enable``` in the console.
@@ -33,8 +50,7 @@ If a player puts on a piece of armor, they will begin to take damage. This mecha
 
 ### Tips
 
-* **IMPORTANT**: In most cases, you must set the gamerules in each dimension separately (overworld, nether, end). For a quicker solution, use ```/naa-gamerules```.
-* To reverse a player's ban, enter ```/hardcore-disable``` into the console followed by ```/pardon <player>```.
+* **IMPORTANT**: In most cases, you must set the gamerules in each dimension separately (overworld, nether, end). For a quicker solution, use ```/naa-gamerules```. This command **runs automatically** after each server restart due to a known Minecraft bug that resets game rules and difficulty.
 * Make sure to reset your world after setting "hardcore" to "true" in ```server.properties``` for the hardcore hearts to appear. Otherwise, you could use a resource pack [like this one](https://modrinth.com/resourcepack/hardcore-hearts).
 * This entire system functions without having to set "hardcore" to "true" in ```server.properties```. Doing so is completely optional, but recommended for players who don't use the resource pack.
 
@@ -44,6 +60,10 @@ Created by [Enzec](https://enzec.net)
 
 ## Version History
 
+* 2.0
+    * Added spawn commands
+    * Dead players will now enter spectator mode
+    * Added custom death cannon support
 * 1.9
     * Cleaned up some code
 * 1.8
@@ -72,12 +92,3 @@ Created by [Enzec](https://enzec.net)
     * Added a startup and shutdown message
 * 1.0
     * Initial Release
- 
-## To Do
-
-* Re-configured spawn system
-* Supply drop system
-* Challenge voting system
-* "Extraction" final challenge
-* Disable dispensers from dispensing armor (to prevent Curse of Binding traps)
-* Create a custom resource pack that includes Hardcore Hearts and a death cannon sound
