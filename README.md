@@ -28,7 +28,7 @@ If a player puts on a piece of armor, they will begin to take damage. This mecha
 
 ### Death Cannon
 
-* Paste the following into ```server.properties```, replacing the current values:
+* Paste the following into ```server.properties```, replacing the existing values:
 ```
 require-resource-pack=true
 resource-pack=https\://download.mc-packs.net/pack/cca8783ed3addfa7e18b925b7a052a48da5789dd.zip
