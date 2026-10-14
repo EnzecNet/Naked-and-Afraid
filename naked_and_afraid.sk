@@ -260,6 +260,11 @@ on damage of player:
 	if attacker is a player:
 		cancel event
 
+on damage:
+	if victim's gamemode is spectator:
+		if damage cause is void:
+			cancel event
+
 # =====================================================
 # STARTUP MESSAGE
 # =====================================================
